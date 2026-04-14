@@ -5,6 +5,9 @@ interface ProductFiltersProps {
   categories: string[];
   selectedCategory: string | null;
   onCategoryChange: (category: string | null) => void;
+  brands: string[];
+  selectedBrand: string | null;
+  onBrandChange: (brand: string | null) => void;
   sortBy: string;
   onSortChange: (sort: string) => void;
   onClearFilters: () => void;
@@ -14,6 +17,9 @@ export const ProductFilters = ({
   categories,
   selectedCategory,
   onCategoryChange,
+  brands,
+  selectedBrand,
+  onBrandChange,
   sortBy,
   onSortChange,
   onClearFilters,
@@ -37,7 +43,7 @@ export const ProductFilters = ({
             />
           </button>
 
-          {(selectedCategory || sortBy !== "default") && (
+          {(selectedCategory || selectedBrand || sortBy !== "default") && (
             <button
               onClick={onClearFilters}
               className="text-xs text-gray-400 hover:text-black transition-colors flex items-center gap-1"
@@ -48,20 +54,20 @@ export const ProductFilters = ({
         </div>
 
         {/* Filters Content - Collapsible on Mobile */}
-        <div className={`mt-4 space-y-6 overflow-hidden transition-all duration-300 ${isOpen ? "max-h-[1000px] opacity-100 mb-2" : "max-h-0 opacity-0 md:max-h-none md:opacity-100"
+        <div className={`mt-4 space-y-6 overflow-hidden transition-all duration-300 ${isOpen ? "max-h-[1200px] opacity-100 mb-2" : "max-h-0 opacity-0 md:max-h-none md:opacity-100"
           } md:block md:mt-8`}>
           {/* Categories */}
           <div>
             <h4 className="text-sm font-semibold mb-3 uppercase tracking-wider text-gray-500">Category</h4>
-            <div className="space-y-2">
+            <div className="space-y-2 text-black">
               <button
                 onClick={() => {
                   onCategoryChange(null);
-                  setIsOpen(false); // Close on mobile after selection
+                  setIsOpen(false);
                 }}
                 className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all ${selectedCategory === null
                   ? "bg-black text-white font-medium"
-                  : "hover:bg-gray-100 text-gray-600"
+                  : "hover:bg-gray-100 text-black"
                   }`}
               >
                 All Categories
@@ -71,14 +77,48 @@ export const ProductFilters = ({
                   key={category}
                   onClick={() => {
                     onCategoryChange(category);
-                    setIsOpen(false); // Close on mobile after selection
+                    setIsOpen(false);
                   }}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all capitalize ${selectedCategory === category
                     ? "bg-black text-white font-medium"
-                    : "hover:bg-gray-100 text-gray-600"
+                    : "hover:bg-gray-100 text-black"
                     }`}
                 >
                   {category}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Brands */}
+          <div>
+            <h4 className="text-sm font-semibold mb-3 uppercase tracking-wider text-gray-500">Brand</h4>
+            <div className="space-y-2 text-black">
+              <button
+                onClick={() => {
+                  onBrandChange(null);
+                  setIsOpen(false);
+                }}
+                className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all ${selectedBrand === null
+                  ? "bg-black text-white font-medium"
+                  : "hover:bg-gray-100 text-black"
+                  }`}
+              >
+                All Brands
+              </button>
+              {brands.map((brand) => (
+                <button
+                  key={brand}
+                  onClick={() => {
+                    onBrandChange(brand);
+                    setIsOpen(false);
+                  }}
+                  className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all capitalize ${selectedBrand === brand
+                    ? "bg-black text-white font-medium"
+                    : "hover:bg-gray-100 text-black"
+                    }`}
+                >
+                  {brand}
                 </button>
               ))}
             </div>
@@ -92,7 +132,7 @@ export const ProductFilters = ({
                 value={sortBy}
                 onChange={(e) => {
                   onSortChange(e.target.value);
-                  setIsOpen(false); // Close on mobile after selection
+                  setIsOpen(false);
                 }}
                 className="w-full appearance-none bg-gray-50 border border-gray-200 text-black py-2.5 px-4 pr-8 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-black transition-all cursor-pointer"
               >

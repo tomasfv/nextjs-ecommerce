@@ -9,6 +9,7 @@ export default async function Home() {
 
   const products = await stripe.products.list({
     expand: ["data.default_price"],
+    limit: 100
   })
 
   console.log(products);

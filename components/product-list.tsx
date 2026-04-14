@@ -13,6 +13,7 @@ interface Props {
 export const ProductList = ({ products }: Props) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<string>("default");
 
   // Extract unique categories dynamically
@@ -22,7 +23,17 @@ export const ProductList = ({ products }: Props) => {
       const category = product.metadata?.category;
       if (category) cats.add(category);
     });
-    return Array.from(cats);
+    return Array.from(cats).sort();
+  }, [products]);
+
+  // Extract unique brands dynamically
+  const brands = useMemo(() => {
+    const bnds = new Set<string>();
+    products.forEach((product) => {
+      const brand = product.metadata?.brand;
+      if (brand) bnds.add(brand);
+    });
+    return Array.from(bnds).sort();
   }, [products]);
 
   // Combine filtering and sorting logic
@@ -41,7 +52,12 @@ export const ProductList = ({ products }: Props) => {
         ? product.metadata?.category === selectedCategory
         : true;
 
-      return matchesSearch && matchesCategory;
+      // Brand filter
+      const matchesBrand = selectedBrand
+        ? product.metadata?.brand === selectedBrand
+        : true;
+
+      return matchesSearch && matchesCategory && matchesBrand;
     });
 
     // Sorting
@@ -64,11 +80,12 @@ export const ProductList = ({ products }: Props) => {
     });
 
     return result;
-  }, [products, searchTerm, selectedCategory, sortBy]);
+  }, [products, searchTerm, selectedCategory, selectedBrand, sortBy]);
 
   const handleClearFilters = () => {
     setSearchTerm("");
     setSelectedCategory(null);
+    setSelectedBrand(null);
     setSortBy("default");
   };
 
@@ -79,6 +96,9 @@ export const ProductList = ({ products }: Props) => {
         categories={categories}
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
+        brands={brands}
+        selectedBrand={selectedBrand}
+        onBrandChange={setSelectedBrand}
         sortBy={sortBy}
         onSortChange={setSortBy}
         onClearFilters={handleClearFilters}

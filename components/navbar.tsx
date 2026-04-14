@@ -29,15 +29,15 @@ export const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 bg-white shadow">
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
-        <Link href="/" className="hover:text-blue-600 font-black">
+        <Link href="/" className="hover:text-amber-700 font-black">
           HARDLINE BIKES
         </Link>
         <div className="hidden md:flex space-x-6 font-bold">
           <Link href="/">Home</Link>
-          <Link href="/products" className="hover:text-blue-600  font-bold">
+          <Link href="/products" className="hover:text-amber-700  font-bold">
             Bikes
           </Link>
-          <Link href="/about" className="hover:text-blue-600 font-bold">
+          <Link href="/about" className="hover:text-amber-700 font-bold">
             About
           </Link>
         </div>
