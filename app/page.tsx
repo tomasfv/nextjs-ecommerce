@@ -9,7 +9,6 @@ export default async function Home() {
 
   const products = await stripe.products.list({
     expand: ["data.default_price"],
-    limit: 5,
   })
 
   console.log(products);
@@ -38,7 +37,7 @@ export default async function Home() {
           </div>
           <Image
             alt="Hero Image"
-            src={products.data[1].images[0]}
+            src={"/img8.webp"}
             className="rounded"
             width={450}
             height={450}
