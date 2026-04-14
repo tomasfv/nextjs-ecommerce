@@ -32,7 +32,7 @@ export default async function Home() {
                 href="/products"
                 className="inline-flex items-center justify-center rounded-full px-6 py-3"
               >
-                Browse All Products
+                Browse All Bikes
               </Link>
             </Button>
           </div>

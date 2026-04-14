@@ -35,7 +35,7 @@ export const Navbar = () => {
         <div className="hidden md:flex space-x-6 font-bold">
           <Link href="/">Home</Link>
           <Link href="/products" className="hover:text-blue-600  font-bold">
-            Products
+            Bikes
           </Link>
           <Link href="/checkout" className="hover:text-blue-600 font-bold">
             Checkout
